@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -482,14 +482,7 @@
 <body>
     <main class="app-shell" aria-label="Bloxd.io .bloxdschem uploader">
         <header class="app-header">
-            <div class="app-title-block">
-                <h1>Bloxd.io .bloxdschem Handler</h1>
-                <p>Upload, verify and download Bloxd schematics for backups, sharing and testing.</p>
-            </div>
-            <div class="tag-pill">
-                <span class="tag-pill-dot"></span>
-                <span>RabbitPlaysYT</span>
-            </div>
+
         </header>
 
         <section class="app-grid">
