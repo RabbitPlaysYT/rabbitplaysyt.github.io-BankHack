@@ -1,15 +1,16 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>BankHack · Intrusion Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --term-bg: #020403;
       --term-fg: #00ff66;
-      --term-fg-dim: #009944;
+      --term-fg-dim: #00b050;
       --accent: #00e6ff;
       --accent-soft: #0094ff;
       --error: #ff2a4f;
@@ -22,8 +23,8 @@
         radial-gradient(circle at bottom, #020510 0, #000 60%);
       color: var(--term-fg);
       font-family: "Courier New", monospace;
-      font-size: 14px;
-      height: 100vh;
+      font-size: 16px;              /* bigger base font */
+      min-height: 100vh;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -43,8 +44,8 @@
     }
 
     .deck-wrapper {
-      width: min(1200px, 96vw);
-      height: min(650px, 92vh);
+      width: min(1200px, 100vw);
+      height: min(700px, 100vh);   /* slightly taller */
       position: relative;
       transform-style: preserve-3d;
       transition: transform 200ms ease-out, box-shadow 200ms ease-out;
@@ -84,20 +85,20 @@
       background-image: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0) 0,
-        rgba(0, 0, 0, 0.65) 2px
+        rgba(0, 0, 0, 0.4) 2px
       );
       background-size: 100% 3px;
       mix-blend-mode: multiply;
-      opacity: 0.8;
-      animation: scanlines-move 7s linear infinite;
+      opacity: 0.6;              /* softer */
+      animation: scanlines-move 9s linear infinite;
     }
 
     .crt-layer::after {
       background:
         radial-gradient(circle at 10% 0, #0f05 0, transparent 55%),
         radial-gradient(circle at 90% 100%, #0ff5 0, transparent 55%);
-      opacity: 0.1;
-      animation: crt-flicker 3.5s infinite alternate;
+      opacity: 0.08;
+      animation: crt-flicker 4s infinite alternate;
     }
 
     .global-glitch {
@@ -144,9 +145,9 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      opacity: 0.32;
+      opacity: 0.28;
       pointer-events: none;
-      filter: blur(0.3px);
+      filter: blur(0.4px);
     }
 
     #terminal-wrap {
@@ -170,7 +171,7 @@
     }
 
     #terminal-header {
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-bottom: 1px solid #003311;
       display: flex;
       align-items: center;
@@ -178,7 +179,7 @@
       background: linear-gradient(to bottom, #001408, #000);
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      font-size: 11px;
+      font-size: 12px;
       color: var(--term-fg-dim);
       position: relative;
       z-index: 3;
@@ -191,8 +192,8 @@
     }
 
     .header-led {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #14ff72;
       box-shadow: 0 0 10px #14ff72;
@@ -200,12 +201,12 @@
     }
 
     #terminal-header span.badge {
-      padding: 2px 6px;
+      padding: 2px 8px;
       border-radius: 2px;
       border: 1px solid #005522;
       background: rgba(0, 40, 18, 0.7);
       color: var(--accent);
-      font-size: 10px;
+      font-size: 11px;
     }
 
     #terminal {
@@ -221,6 +222,8 @@
         -1px 0 1px rgba(0, 255, 255, 0.3);
       position: relative;
       z-index: 2;
+      font-size: 15px;     /* larger terminal text */
+      line-height: 1.4;
     }
 
     .status-line { color: var(--term-fg-dim); }
@@ -255,8 +258,8 @@
       flex-direction: column;
       background: radial-gradient(circle at 0 0, #01100a 0, #000 70%);
       color: var(--term-fg-dim);
-      padding: 10px 10px 10px 12px;
-      font-size: 11px;
+      padding: 12px;
+      font-size: 12px;
       border-left: 1px solid #00220f;
     }
 
@@ -269,7 +272,7 @@
 
     .glitch {
       position: relative;
-      font-size: 18px;
+      font-size: 20px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: #00ff88;
@@ -327,7 +330,7 @@
       margin-bottom: 4px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      font-size: 9px;
+      font-size: 10px;
     }
 
     .hud-kv {
@@ -339,7 +342,7 @@
     .hud-bar {
       position: relative;
       width: 100%;
-      height: 5px;
+      height: 6px;
       background: #001109;
       border: 1px solid #00401c;
       overflow: hidden;
@@ -381,7 +384,7 @@
 
     .hud-footer {
       margin-top: auto;
-      font-size: 9px;
+      font-size: 10px;
       color: #006633;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -414,13 +417,14 @@
     .login-box {
       border: 1px solid #00ff66;
       padding: 18px 22px;
-      width: 280px;
-      max-width: 90vw;
+      width: 320px;
+      max-width: 92vw;
       background: #020604;
       box-shadow:
         0 0 25px #00ff6622,
         0 0 70px #00ff6633;
       text-shadow: 0 0 4px #00ff6644;
+      font-size: 13px;
     }
 
     .login-title {
@@ -428,11 +432,11 @@
       letter-spacing: 0.16em;
       margin-bottom: 8px;
       color: #00ff88;
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .login-sub {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--term-fg-dim);
       margin-bottom: 10px;
     }
@@ -441,7 +445,7 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 8px;
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .login-field label {
@@ -449,15 +453,16 @@
       color: #00e6ff;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      font-size: 11px;
     }
 
     .login-field input {
       background: #000;
       border: 1px solid #006633;
       color: var(--term-fg);
-      padding: 4px 6px;
+      padding: 5px 7px;
       font-family: "Courier New", monospace;
-      font-size: 12px;
+      font-size: 13px;
       outline: none;
     }
 
@@ -467,13 +472,13 @@
     }
 
     .login-hint {
-      font-size: 9px;
+      font-size: 10px;
       color: #007744;
       margin-bottom: 10px;
     }
 
     .login-error {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--error);
       min-height: 14px;
       margin-bottom: 6px;
@@ -481,7 +486,7 @@
 
     .login-button {
       width: 100%;
-      padding: 6px 8px;
+      padding: 7px 8px;
       margin-top: 4px;
       border: 1px solid #00ff66;
       background: linear-gradient(to right, #003318, #008844);
@@ -498,11 +503,10 @@
 
     .login-meta {
       margin-top: 8px;
-      font-size: 9px;
+      font-size: 10px;
       color: #005522;
     }
 
-    @keyframes blink { 50% { opacity: 0; } }
     @keyframes crt-flicker { 0% { opacity: 0.04; } 100% { opacity: 0.1; } }
     @keyframes scanlines-move { 0% { transform: translateY(0); } 100% { transform: translateY(-3px); } }
     @keyframes flash { 0% { opacity: 0.85; } 100% { opacity: 0; } }
@@ -549,7 +553,7 @@
     }
 
     @media (max-width: 900px) {
-      body { font-size: 12px; }
+      body { font-size: 14px; }
       .deck-wrapper {
         width: 100vw;
         height: 100vh;
@@ -596,10 +600,9 @@
       BANKHACK is made to entertain people, for fun! <strong>Rabbit</strong> is making this for a fun game! <strong>Enjoy!</strong>
     </div>
     <div class="login-error" id="login-error"></div>
-    <div class="login-error">ID: test1234 KEY: test3333</div>
+    <div class="login-meta">ID: test1234 · KEY: test3333</div>
     <button class="login-button" id="login-btn">LOGIN</button>
 
-    <!-- HOW TO PLAY BUTTON -->
     <button class="login-button" id="howto-btn" style="margin-top:8px;background:linear-gradient(to right,#003318,#444);">
       HOW TO PLAY
     </button>
@@ -621,21 +624,19 @@
       </div>
 
       <pre style="font-size:11px; line-height:1.3; white-space:pre-wrap;">
-<br>
 1) LOG IN
    • ID: test1234
    • KEY: test3333
    • NAME: You Choose!.
-<br>
+
 2) ARM THE CONSOLE
    • After login, the screen fades into the main terminal.
-   • Click on the "[AUTH]" once.
-   • Start spamming your keyboard!
+   • Press any key in the terminal area and start spamming your keyboard.
    • Each key feeds the intrusion script and types more "Python" code.
-<br>
+
 3) WATCH THE BREACH
    • The console will:
-     - Scan bank servers and open ports.
+     - Scan fake bank servers and open ports.
      - "Decrypt" the vault.
      - Dump sample accounts and balances.
      - Exfiltrate $5,000,000 to a mule wallet.
@@ -643,7 +644,7 @@
      - Accounts: 1247/1247 when the vault is unlocked.
      - Balance: shows $5,000,000.00.
      - Stolen: tracks how much you "steal" with commands.
-<br>
+
 4) COMMAND MODE
    • When you see: BREACH COMPLETE - laundering through crypto mixer
      the console prints:
@@ -657,17 +658,12 @@
    COMMANDS:
    - transfer X
        Moves X dollars from the vault to the stolen total.
-       Example: transfer 250000
    - dump
        Shows exposed rich accounts (fake numbers).
    - launder
        Prints a message about cleaning the stolen money.
    - exit
        Leaves command mode. You can re-run the breach by spamming keys again.
-
-5) REPLAYING
-   • More likely refresh your page.
-   • Try different names and transfer amounts for screenshots or videos.
 
 REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking.
       </pre>
@@ -692,7 +688,6 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
         </div>
         <span class="badge">IDLE · LOCKED</span>
       </div>
-      <!-- terminal starts empty; JS will add prompt + output -->
       <div id="terminal"></div>
       <div class="flash-overlay" id="flash"></div>
     </div>
@@ -740,12 +735,12 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
 </div>
 
 <script>
-  // ------- MATRIX BACKGROUND -------
+  // MATRIX
   const matrixCanvas = document.getElementById('matrix');
   const mtx = matrixCanvas.getContext('2d');
   const matrixChars = '01█▓░#/*=+<>'.split('');
   let drops = [];
-  let fontSize = 14;
+  let fontSize = 16;
 
   function resizeMatrix() {
     matrixCanvas.width = matrixCanvas.clientWidth;
@@ -781,7 +776,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
   }
   drawMatrix();
 
-  // ------- PARTICLES -------
+  // PARTICLES
   const particleLayer = document.getElementById('particle-layer');
   function spawnParticles(count) {
     for (let i = 0; i < count; i++) {
@@ -795,9 +790,9 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
       particleLayer.appendChild(p);
     }
   }
-  spawnParticles(22);
+  spawnParticles(18); // slightly fewer for less lag
 
-  // ------- TERMINAL + HUD -------
+  // TERMINAL + HUD
   const terminal = document.getElementById('terminal');
   const flash    = document.getElementById('flash');
   const globalGlitch = document.getElementById('global-glitch');
@@ -811,7 +806,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
   const hudStolen    = document.getElementById('hud-stolen');
   const hudVector    = document.getElementById('hud-vector');
 
-  // Create in-terminal command input
+  // Command line
   const commandLine = document.createElement('div');
   commandLine.style.marginTop = '6px';
   const promptSpan = document.createElement('span');
@@ -825,7 +820,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
   commandLine.appendChild(commandInput);
   terminal.appendChild(commandLine);
 
-  // ------- LOGIN + HOW TO PLAY ELEMENTS -------
+  // LOGIN + HOWTO
   const loginOverlay = document.getElementById('login-overlay');
   const loginName    = document.getElementById('login-name');
   const loginUser    = document.getElementById('login-user');
@@ -842,7 +837,6 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
   let isLoggedIn = false;
   let operatorName = 'operator';
 
-  // Fake bank hacking script lines
   const scriptLines = [
     "import time, sqlite3, random",
     "from cryptography.fernet import Fernet",
@@ -936,7 +930,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
     hudAuthBadge.textContent = text;
   }
 
-  // How to Play behaviour
+  // HOW TO overlay
   if (howtoBtn && howtoOverlay && howtoClose) {
     howtoOverlay.style.display = 'none';
 
@@ -955,7 +949,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
     });
   }
 
-  // Login logic
+  // LOGIN
   function attemptLogin() {
     const u = loginUser.value.trim();
     const p = loginPass.value.trim();
@@ -963,8 +957,6 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
 
     if (u === VALID_USER && p === VALID_PASS) {
       operatorName = nameInput || 'operator';
-
-      // update vector to include operator name
       if (hudVector) {
         hudVector.textContent = `SQLi · ${operatorName.toUpperCase()}`;
       }
@@ -979,7 +971,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
       }, 400);
       injectBanner();
       addStatusLine(`[AUTH]  ${operatorName} authenticated. intrusion core ready.`, "ok");
-      addStatusLine("[HINT]  spam any key to execute breach playbook...", "warn");
+      addStatusLine("[HINT]  press any key to execute breach playbook...", "warn");
       commandInput.focus();
     } else {
       loginError.textContent = "AUTH FAIL :: invalid credentials";
@@ -998,7 +990,6 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
   document.addEventListener('keydown', (e) => {
     if (!isLoggedIn) return;
 
-    // When in command mode, Enter should submit the command
     if (commandMode && e.target === commandInput && e.key === 'Enter') {
       e.preventDefault();
       handleCommand(commandInput.textContent.trim());
@@ -1018,7 +1009,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
     }
   });
 
-  // Typing engine
+  // TYPING
   function typeChar() {
     if (!idleTimer) {
       typingTimer = null;
@@ -1128,7 +1119,7 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
   }
 
   function maybeGlobalGlitch() {
-    if (Math.random() < 0.55) {
+    if (Math.random() < 0.45) {
       globalGlitch.classList.remove('active');
       void globalGlitch.offsetWidth;
       globalGlitch.classList.add('active');
@@ -1167,7 +1158,6 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
     hudStolen.textContent = `$${stolenTotal.toLocaleString()}`;
   }
 
-  // In-terminal command handler
   function handleCommand(input) {
     if (!input) return;
     const cmd = input.toLowerCase();
@@ -1222,3 +1212,4 @@ REMEMBER: This is a visual toy only. Use it to look cool, not to do real hacking
 
 </body>
 </html>
+
